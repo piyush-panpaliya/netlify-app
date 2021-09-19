@@ -1,0 +1,72 @@
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+  
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+  
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+  
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+body{
+	background-color: #1E1E2E;
+}
+.main{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 30%;
+	background-color: rebeccapurple;
+	margin: 200px auto;
+}
+.f{
+	margin-left: 10px;
+	width: 70%;
+	flex-shrink: 2.5;
+}
+.tin{
+	padding: 5px 10px;
+	width: 100%;
+	height: 30px;
+	border: none;
+	border-radius: 5px;	
+}
+.sb{
+	margin-left: 10px;
+	height: 50px;
+	width: 15%;
+	border: none;
+	background-color: #59ff59;
+	transition-duration: 1000ms;
+}
+.sb .h{
+	opacity: 0;
+}
+.sb:hover{
+	background-color: rgb(50, 255, 50);
+}
+.sb:hover .h{
+	transition-duration: 1000ms;
+	opacity: 1;
+	
+}
+@media (max-width:1000px) {
+	.main{
+		width: 90%;
+	}
+	
+}

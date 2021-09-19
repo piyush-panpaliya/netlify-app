@@ -1,0 +1,151 @@
+*{
+	box-sizing: border-box;
+}
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+  
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+  
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+  
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+body{
+	background-color: #1E1E2E;
+}
+.main{
+    display: flex;
+
+}
+.embed-container {
+	align-items: center;
+	width: 82%;
+}
+#frame{
+	height:45vw;
+    width:80vw;
+}
+.right{
+	margin-left: 1%;
+	width: 16%;
+}
+.feed{
+	margin-top: 80px;
+	border-radius: 7px;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #5c5d68;
+	
+}
+.txt{
+	margin-top: 10px;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	width: 100%;
+	margin-left: 10px;
+	text-align: center;
+}
+.b{
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.b1{
+	width: 40%;
+	margin:5px  5px 10px 10px;
+	height: 50px;
+	border:none;
+	border-radius: 5px;
+	background-color: rgb(163, 255, 154);
+	text-align: center;
+	transition-duration: 800ms;
+}
+.b2{
+	width: 40%;
+	margin:5px  10px 10px 5px;
+	height: 50px;
+	border: none;
+	border-radius: 5px;
+	background-color: rgb(255, 131, 131);
+	transition-duration: 800ms;
+}
+.h{
+	opacity: 0;
+}
+.b1:hover .h{
+	transition-duration: 1000ms;
+	opacity: 1;
+}
+.b2:hover .h{
+	transition-duration: 1000ms;
+	opacity: 1;
+}
+
+.b1:hover{
+	background-color: rgb(107, 255, 94);
+	animation-duration: 100ms;
+}
+.b2:hover{
+	background-color: rgb(255, 75, 75);
+	animation-duration: 100ms;
+}
+
+@media only screen and (max-width: 980px) {
+    .main{
+		display: block;
+	}
+	.embed-container{
+
+		width: 100%;
+
+	}
+	#frame{
+		height:54.6vw;
+		width:97vw;
+	}
+	.right{
+		width: 98%;
+		align-items: center;
+	}
+	.feed{
+		display: flex;
+		margin-top: 40px;
+		align-items: center;
+	}
+	.h3{
+		width: 50%;
+	}
+	.b{
+		align-items: center;
+		width: 50%;
+	}
+	.b1{
+		width: 40%;
+		margin:10px  5px 10px 10px;
+		height: 50px;
+	}
+	.b2{
+		width: 40%;
+		margin:10px  10px 10px 5px;
+		height: 50px;
+	}
+	
+}
