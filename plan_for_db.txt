@@ -1,0 +1,237 @@
+CreateCollection({ name: "video" });
+
+CreateIndex({ name: "linkbyid", source: Collection("video"), terms: [{field: ["data", "vid"]}], 
+values: [{field: ["data", "link"]}], 
+unique: false, });
+
+CreateCollection({ name: "tokens" }); 
+
+CreateIndex({ name: "tokenvalidate", source: Collection("tokens"), terms: [
+{field: ["data", "token"]}], 
+values: [ 
+{field: ["data", "tvn"]},
+{field: ["data", "vid"]},
+{field: ["data", "tun"]}, 
+{field: ["data", "ta"]} ], });
+
+CreateIndex({ 
+name: "unique_id", source: Collection("token"), 
+terms: [{field: ["data", "vid"]}], 
+unique: true, }); 
+
+Let( {                                 -------------------working for ading and updating tokens
+token: "hash", 
+vid:"id",
+tvn:"3",
+account_match: Match(Index("unique_id"), Var("vid")), 
+id_is_new: Not(Exists(Var("account_match"))) }, 
+
+	If(Var("id_is_new"),
+	    Do(
+	      Create(
+	        // Store signup token for new account
+	        Collection("tokens"),
+	        {
+	          data: {
+	            token: Var("token"),
+	            tun: 0,
+	            tvn:Subtract(Var("tvn"),1),
+	            vid: Var("vid"),
+	            ta:true,
+	          }
+	        }
+	      ),
+	      "added t"
+	    ),
+	    Do( 
+	      Update(Select(["ref"],Get(Match(Index("unique_id"), "123"))),            
+	        {
+	          data: {
+	            token: Var("token"),
+	            tun: 0,
+	            tvn: Var("tvn"),
+	            ta:true,
+	          }
+	        }
+	      ),
+	      "updated t"
+	    )
+    )
+)
+
+---------------------------working and returns vid can also return link if edited
+Let(                                
+  {
+    token: "hash",
+    token_match: Match(Index("tokenvalidate"), Var("token")),
+    tg: If(Exists(Var("token_match")), Get(Var("token_match")), null),
+  },
+  If(
+    IsNull(Var("tg")), // Token not found?
+    "invalid",
+    If(
+     Select(["data", "ta"], Var("tg")), // Expired?
+     If(
+           GTE(Select(["data", "tvn"], Var("tg")),Select(["data", "tun"], Var("tg"))),
+		   Do(
+	        Update(Select("ref", Var("tg")), 
+	        {data:{tun: Add(1, Select(["data", "tun"], Var("tg"))) }}), // Set as used
+	        { account_id: Select(["data", "vid"], Var("tg"))}
+	        ),
+	       Do( 
+	        Update(Select("ref", Var("tg")),{data:{ta:false}}), 
+	        "limit"
+	        )
+	    ),
+      "not allowed" 
+    )
+  )
+)
+
+
+
+Let(                             -----------------------------adds video name and link
+	{
+	 name:"psh",
+	 link:"g.com"	
+	},
+	Create(
+	        Collection("video"),
+	        {
+	          data: {
+	            name: Var("name"),
+	            link: Var("link"),
+	            vid:NewId()
+	        }}
+	      )          
+)
+
+Let(                     ------------------------------------get link from                     
+	{
+	 vid:542542	
+	},
+	Select(["data","link"],Get(Match(Index("linkbyid"),Var("vid"))))
+	        
+)
+
+
+------------------------------------------------------------------
+
+
+
+
+FINAL-----------
+
+
+CreateCollection({ name: "video" });
+
+CreateIndex({ name: "linkbyid", source: Collection("video"), terms: [{field: ["data", "vid"]}], 
+values: [{field: ["data", "link"]}], 
+unique: false, });
+
+CreateCollection({ name: "tokens" }); 
+
+CreateIndex({ name: "tokenvalidate", source: Collection("tokens"), terms: [
+{field: ["data", "token"]}], 
+values: [ 
+{field: ["data", "tvn"]},
+{field: ["data", "vid"]},
+{field: ["data", "tun"]}, 
+{field: ["data", "ta"]} ], });
+
+CreateIndex({ 
+name: "unique_id", source: Collection("token"), 
+terms: [{field: ["data", "vid"]}], 
+unique: true, }); 
+
+Let( {                                 -------------------working for adding and updating tokens
+token: "hash", 
+vid:"id",
+tvn:"3",
+account_match: Match(Index("unique_id"), Var("vid")), 
+id_is_new: Not(Exists(Var("account_match"))) }, 
+
+	If(Var("id_is_new"),
+	    Do(
+	      Create(
+	        // Store signup token for new account
+	        Collection("tokens"),
+	        {
+	          data: {
+	            token: Var("token"),
+	            tun: 0,
+	            tvn: Subtract(Var("tvn"),1),
+	            vid: Var("vid"),
+	            ta:true,
+	          }
+	        }
+	      ),
+	      "added t"
+	    ),
+	    Do( 
+	      Update(Select(["ref"],Get(Match(Index("unique_id"), "123"))),            
+	        {
+	          data: {
+	            token: Var("token"),
+	            tun: 0,
+	            tvn: Var("tvn"),
+	            ta:true,
+	          }
+	        }
+	      ),
+	      "updated t"
+	    )
+    )
+)
+
+
+---------------------------working and returns vid can also return link if edited
+Let(                                
+  {
+    token: "hash",
+    token_match: Match(Index("tokenvalidate"), Var("token")),
+    tg: If(Exists(Var("token_match")), Get(Var("token_match")), null),
+  },
+  If(
+    IsNull(Var("tg")), // Token not found?
+    "invalid",
+    If(
+     Select(["data", "ta"], Var("tg")), // Expired?
+     If(
+           GTE(Select(["data", "tvn"], Var("tg")),Select(["data", "tun"], Var("tg"))),
+		   Do(
+	        Update(Select("ref", Var("tg")), 
+	        {data:{tun: Add(1, Select(["data", "tun"], Var("tg"))) }}), // Set as used
+	        { account_id: Select(["data", "vid"], Var("tg"))}
+	        ),
+	       Do( 
+	        Update(Select("ref", Var("tg")),{data:{ta:false}}), 
+	        "limit"
+	        )
+	    ),
+      "not allowed" 
+    )
+  )
+)
+
+
+Let(                             -----------------------------adds video name and link
+	{
+	 name:"psh",
+	 link:"g.com"	
+	},
+	Create(
+	        Collection("video"),
+	        {
+	          data: {
+	            name: Var("name"),
+	            link: Var("link"),
+	            vid:NewId()
+	        }}
+	      )          
+)
+
+
+---------------------
+notes:
+tvn is 1 less than actual due to GTE 

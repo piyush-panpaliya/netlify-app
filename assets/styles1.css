@@ -180,7 +180,7 @@ list::-webkit-scrollbar {
 	border: none;
 }
 #delb:hover{
-	color: red;
+	color: #FF830A;
 	transition-duration: 1000ms;
 }
 .form{

@@ -14,46 +14,57 @@
 		<h1>DASHBOARD</h1>
 		</div>
 		<div class="add">
-			<form class="nform">
+			<form class="nform" action="" id="nform">
 				<label class="label">name</label>
-				<input  class="nname" name="nname">
-				<label class="label">link</label>
-				<input  class="nlink" name="nlink">
-				<button class="addb"><span id="addb" class="material-icons-outlined">add_circle</span></button>
+				<input  class="nname" name="nname" id="nname">
+				<label class="label" >link</label>
+				<input  class="nlink" name="nlink" id="">
+				<button class="addb"><span id="addb" class="material-icons-outlined" onclick="getvid">add_circle</span></button>
 			</form>
 		</div>
 		<div id="lists" class="list">
 			<!--for loop here-->
+
+
 			<div class="list1">
 				<div class="name"><h4>name</h4>
 				</div>
 				<div class="in">
 					<span class="circle"></span>
-					<form class="form">
+					<form class="form" >
 						<input type="number" min="1" class="no" name="no" >
 						<button class="gen"><span id="gener">GENERATE</span></button>
 						<input class="in" type="" name="tok">
-						<button class="del"><span id="delb" class="material-icons-outlined">delete</span>
+						<button class="del" id="del" ><span id="delb" class="material-icons-outlined">delete</span>
 						</button>
 					</form>
 				</div>
 			</div>
-			<div class="list1">
-				<div class="name"><h4>name</h4>
-				</div>
-				<div class="in">
-					<span class="circle"></span>
-					<form class="form">
-						<input type="number" min="1" class="no" name="no" >
-						<button class="gen"><span id="gener">GENERATE</span></button>
-						<input class="in" type="" name="tok">
-						<button class="del"><span id="delb" class="material-icons-outlined">delete</span>
-						</button>
-					</form>
-				</div>
-			</div>
-			
+            
+            <!--for loop till here-->
+
 		</div>
 	</div>
+	<button id="test" >hii</button>
+	<script type="text/javascript">
+		
+		getvid=async () => {
+	        try {
+	        	var formData = JSON.stringify();
+	        	console.log(formData);
+	            const res = await fetch("/.netlify/functions/getvid", {
+	                method: 'PUT',
+	                body: JSON.stringify({"token":"72343weda4252752"})
+	            });
+	            const movies = await res.json();
+	            console.log(JSON.stringify(movies))
+	           
+	        } catch (error) {
+	            console.error(error);
+	        }
+        }
+        const exampleForm = document.getElementById("test");
+		exampleForm.addEventListener("submit", getvid);
+	</script>
 </body>
 </html>

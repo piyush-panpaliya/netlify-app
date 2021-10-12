@@ -1,0 +1,51 @@
+const axios = require('axios');
+require('dotenv').config();
+
+module.exports = async (query, variables) => {
+    const {
+        data: { data, errors },
+    } = await axios({
+        url: 'https://graphql.fauna.com/graphql',
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
+        },
+        data: {
+            query,
+            variables,
+        },
+    });
+    if (errors) {
+        console.error(errors);
+        throw new Error('Something went wrong');
+    }
+    return data;
+};
+
+
+require('dotenv').config();
+const { GET_LINKS } = require('./utils/linkQueries.js');
+const sendQuery = require('./utils/sendQuery');
+const formattedResponse = require('./utils/formattedResponse');
+exports.handler = async (event) => {
+    try {
+        const res = await sendQuery(GET_LINKS);
+        const data = res.allLinks.data;
+        return formattedResponse(200, data);
+    } catch (err) {
+        console.error(err);
+        return formattedResponse(500, { err: 'Something went wrong' });
+    }
+};
+
+
+<script type="text/javascript">
+        var news = document.getElementsByClassName("list")[0];
+        var items = JSON.items;
+        for(var i = 0; i < items.length; i++) {
+            var h5 = document.createElement("h5");
+            h5.innerHTML = items[i].title;
+            news.appendChild(h5);
+
+}
+    </script>
