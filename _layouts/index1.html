@@ -1,70 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>bwac</title>
-	<meta http-equiv="refresh" content="300000" />
+	<title>BWAC</title>
 	<link rel="stylesheet" type="text/css" href="assets\styles1.css">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    
 </head>
-<body style=" background-color: #1E1E2E;">
+<body style=" background-color: #1E1E2E;" >
 	<div class='main'>
 		<div class="head">
 		<h1>DASHBOARD</h1>
 		</div>
 		<div class="add">
 			<form class="nform" action="" id="nform">
-				<label class="label">name</label>
-				<input  class="nname" name="nname" id="nname">
-				<label class="label" >link</label>
-				<input  class="nlink" name="nlink" id="">
-				<button class="addb"><span id="addb" class="material-icons-outlined" onclick="getvid">add_circle</span></button>
+				<label class="label" for="nname">name
+                <input  type="text" class="nname" name="name" id="nname">
+				</label>
+				
+				<label class="label" for="nlink">link
+				<input type="text" class="nlink" name="link" id="nlink">
+			    </label>
+				<input type="submit" class="material-icons-outlined addb" value="add_circle"> 
 			</form>
 		</div>
 		<div id="lists" class="list">
 			<!--for loop here-->
-
-
-			<div class="list1">
-				<div class="name"><h4>name</h4>
-				</div>
-				<div class="in">
-					<span class="circle"></span>
-					<form class="form" >
-						<input type="number" min="1" class="no" name="no" >
-						<button class="gen"><span id="gener">GENERATE</span></button>
-						<input class="in" type="" name="tok">
-						<button class="del" id="del" ><span id="delb" class="material-icons-outlined">delete</span>
-						</button>
-					</form>
-				</div>
-			</div>
-            
+           
             <!--for loop till here-->
 
 		</div>
 	</div>
-	<button id="test" >hii</button>
-	<script type="text/javascript">
-		
-		getvid=async () => {
-	        try {
-	        	var formData = JSON.stringify();
-	        	console.log(formData);
-	            const res = await fetch("/.netlify/functions/getvid", {
-	                method: 'PUT',
-	                body: JSON.stringify({"token":"72343weda4252752"})
-	            });
-	            const movies = await res.json();
-	            console.log(JSON.stringify(movies))
-	           
-	        } catch (error) {
-	            console.error(error);
-	        }
-        }
-        const exampleForm = document.getElementById("test");
-		exampleForm.addEventListener("submit", getvid);
-	</script>
+	<script type="text/javascript" src="/js/dashboard.js"></script>
+	<script type="text/javascript" src="/js/displayallvideo.js"></script>
+	<script type="text/javascript">main();</script>
 </body>
 </html>

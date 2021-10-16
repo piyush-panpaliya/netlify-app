@@ -7,9 +7,8 @@ exports.handler = async (event, context) => {
   try {
     let avenger = await clientQuery.query(
       q.Let( {                                 
-		token: data.token, 
 		vid:data.vid,
-		tvn:data.tvn,
+		tvn: q.ToNumber(data.tvn),
 		account_match: q.Match(q.Index("unique_id"), q.Var("vid")), 
 		id_is_new: q.Not(q.Exists(q.Var("account_match"))) }, 
 
@@ -20,7 +19,7 @@ exports.handler = async (event, context) => {
 	        q.Collection("tokens"),
 	        {
 	          data: {
-	            token: q.Var("token"),
+	            token: q.NewId(),
 	            tun: 0,
 	            tvn: q.Subtract(q.Var("tvn"),1),
 	            vid: q.Var("vid"),
@@ -28,20 +27,20 @@ exports.handler = async (event, context) => {
 	          }
 	        }
 	      ),
-	      "added t"
+	      q.Get(q.Match(q.Index("gettoken"), q.Var("vid")))
 	    ),
 	    q.Do( 
 	      q.Update(q.Select(["ref"],q.Get(q.Match(q.Index("unique_id"), q.Var("vid")))),            
 	        {
 	          data: {
-	            token: q.Var("token"),
+	            token: q.NewId(),
 	            tun: 0,
 	            tvn: q.Var("tvn"),
 	            ta:true,
 	          }
 	        }
 	      ),
-	      "updated t"
+	      q.Get(q.Match(q.Index("gettoken"), q.Var("vid")))
 	    )
     )
 )

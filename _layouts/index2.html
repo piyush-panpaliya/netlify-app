@@ -9,6 +9,7 @@
 	<script src="//cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
 </head>
 <body>
+	
 	<div class="main">
 		<div class="embed-container">
 	    	<iframe 
@@ -22,11 +23,14 @@
 			<div class="feed">
 				<div class="txt"><h3 >FEEDBACK</h3></div>
 				<div class="b">
-				<button class="b1"><span class="material-icons h">done</span></button>
-				<button class="b2"><span class="material-icons h ">highlight_off</span></button>
+				<button class="b1" onclick="good();"><span class="material-icons h">done</span></button>
+				<button class="b2" onclick="bad();"><span class="material-icons h ">highlight_off</span></button>
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" src="/js/vidtolink.js"></script>
+		<script type="text/javascript" src="/js/feedback.js"></script>
 	</div>
+	
 </body>
 </html>

@@ -1,51 +1,18 @@
-const axios = require('axios');
-require('dotenv').config();
-
-module.exports = async (query, variables) => {
-    const {
-        data: { data, errors },
-    } = await axios({
-        url: 'https://graphql.fauna.com/graphql',
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
-        },
-        data: {
-            query,
-            variables,
-        },
-    });
-    if (errors) {
-        console.error(errors);
-        throw new Error('Something went wrong');
-    }
-    return data;
-};
 
 
-require('dotenv').config();
-const { GET_LINKS } = require('./utils/linkQueries.js');
-const sendQuery = require('./utils/sendQuery');
-const formattedResponse = require('./utils/formattedResponse');
-exports.handler = async (event) => {
+async function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    const url = "http://localhost:8888/.netlify/functions/newvideo";
     try {
-        const res = await sendQuery(GET_LINKS);
-        const data = res.allLinks.data;
-        return formattedResponse(200, data);
-    } catch (err) {
-        console.error(err);
-        return formattedResponse(500, { err: 'Something went wrong' });
+        const formData = new FormData(form);
+        console.log(Object.fromEntries(formData.entries()));
+        const responseData = await postFormDataAsJson({url , formData });
+   
+        console.log({ responseData });
+    } catch (error) {
+        console.error(error);
     }
-};
-
-
-<script type="text/javascript">
-        var news = document.getElementsByClassName("list")[0];
-        var items = JSON.items;
-        for(var i = 0; i < items.length; i++) {
-            var h5 = document.createElement("h5");
-            h5.innerHTML = items[i].title;
-            news.appendChild(h5);
-
 }
-    </script>

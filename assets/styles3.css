@@ -26,16 +26,17 @@ body{
 	background-color: #1E1E2E;
 }
 .main{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	
 	width: 30%;
 	background-color: rebeccapurple;
 	margin: 200px auto;
 }
 .f{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	margin-left: 10px;
-	width: 70%;
+	width: 100%;
 	flex-shrink: 2.5;
 }
 .tin{
