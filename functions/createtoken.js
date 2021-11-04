@@ -1,10 +1,14 @@
 const { requestObj, responseObj } = require('./utils/helper');
 const { q, clientQuery } = require('./utils/faunaconnect');
 
+const rateLimit = require("lambda-rate-limiter")({
+  interval: 60 * 1000 // Our rate-limit interval, one minute
+}).check;
+
 exports.handler = async (event, context) => {
   let data = requestObj(event.body);
-
-  try {
+  try{
+  	try {
     let avenger = await clientQuery.query(
       q.Let( {                                 
 		vid:data.vid,
@@ -51,8 +55,14 @@ exports.handler = async (event, context) => {
     console.log(error)
     return responseObj(500, error);
   }
+}
+  catch (error) {
+    return { statusCode: 429 }; // Still returning a basic 429, but we could do anything~
+  }
+  
+  
  
-};
+};;
 
 
 
