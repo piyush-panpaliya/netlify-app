@@ -7,7 +7,7 @@ const rateLimit = require("lambda-rate-limiter")({
 exports.handler = async (event, context) => {
   let data = requestObj(event.body);
   try{
-    await rateLimit(10, event.headers["client-ip"]);
+    await rateLimit(2, event.headers["client-ip"]);
 
   } catch (error) {
     return { statusCode: 429 }; // Still returning a basic 429, but we could do anything~
